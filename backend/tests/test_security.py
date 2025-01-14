@@ -1,7 +1,7 @@
 from jwt import decode
 
+from app.config.settings import Settings
 from app.helpers.security import create_access_token
-from backend.app.config.settings import Settings
 
 
 def test_jwt():

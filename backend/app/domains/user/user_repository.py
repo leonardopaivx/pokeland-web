@@ -14,6 +14,9 @@ class UserRepository(BaseRepository[User]):
     def find_by_email_or_username(
         self, email: Optional[str] = None, username: Optional[str] = None
     ) -> Optional[User]:
+        if email is None and username is None:
+            return None
+
         stmt = select(User).where(
             (User.email == email) | (User.username == username)
         )
