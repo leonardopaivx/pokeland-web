@@ -84,3 +84,13 @@ def user(session):
 
     session.delete(user)
     session.commit()
+
+
+@pytest.fixture
+def token(client, user):
+    response = client.post(
+        'api/v1/auth',
+        json={'username': user.username, 'password': 'testtest'},
+    )
+
+    return response.json['token']

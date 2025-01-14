@@ -9,6 +9,7 @@ from app.config.db import table_registry
 from app.config.settings import Settings
 
 from app.domains.user.user import *
+from app.domains.user_pokemon.user_pokemon import *
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
