@@ -7,3 +7,6 @@ class Settings(BaseSettings):
     )
 
     DB_URL: str
+    SECRET_KEY: str
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
+    ALGORITHM: str = 'HS256'
