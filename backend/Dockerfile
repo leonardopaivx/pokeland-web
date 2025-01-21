@@ -7,7 +7,10 @@ COPY . .
 RUN pip install poetry
 
 RUN poetry config installer.max-workers 10
-RUN poetry install --no-interaction --no-ansi
+RUN poetry install --no-root --no-interaction --no-ansi
 
 EXPOSE 8000
-CMD poetry run python3 -m app.main
+
+COPY entrypoint.sh /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
+ENTRYPOINT ["/app/entrypoint.sh"]
