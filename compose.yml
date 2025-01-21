@@ -1,3 +1,5 @@
+version: "3.9"
+
 services:
   pokeland_database:
     image: postgres
@@ -17,11 +19,10 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8000:8000"
-    entrypoint: ./entrypoint.sh
     depends_on:
       - pokeland_database
     environment:
-      DATABASE_URL: postgresql+psycopg://app_user:app_password@pokeland_database:5432/app_db
+      DB_URL: postgresql+psycopg://app_user:app_password@pokeland_database:5432/app_db
       SECRET_KEY: secret
 
 volumes:
