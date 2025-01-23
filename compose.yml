@@ -25,5 +25,17 @@ services:
       DB_URL: postgresql+psycopg://app_user:app_password@pokeland_database:5432/app_db
       SECRET_KEY: secret
 
+  pokeland_ui:
+    image: pokeland_ui
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - pokeland_api
+    environment:
+      NEXT_PUBLIC_API_URL: http://pokeland_api:8000
+
 volumes:
   pgdata:
