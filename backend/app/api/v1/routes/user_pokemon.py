@@ -15,8 +15,8 @@ user_pokemon_bp = Blueprint(
 )
 
 
-@user_pokemon_bp.get('/catch')
-@security.token_required
+@user_pokemon_bp.post('/catch')
+@security.async_token_required
 async def catch_pokemon(current_user: User):
     pokemon_name = await fetch_rand_pokemon_name()
 
@@ -34,7 +34,7 @@ async def catch_pokemon(current_user: User):
 
 
 @user_pokemon_bp.get('')
-@security.token_required
+@security.async_token_required
 async def list_user_pokemons(current_user: User):
     user_pokemons = current_user.pokemons
 
