@@ -42,7 +42,7 @@ const Stats: FC<StatsProps> = ({ pokemon }) => {
           <tr>
             <th
               colSpan={2}
-              className="dark:bg-gray-800 text-white px-5 py-1 text-center text-lg font-semibold text-primary lg:py-2 lg:text-xl"
+              className="bg-gray-800 text-white px-5 py-1 text-center text-lg font-semibold text-primary lg:py-2 lg:text-xl"
             >
               Pokemon Stats
             </th>
