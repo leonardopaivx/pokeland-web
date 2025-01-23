@@ -10,14 +10,15 @@ from app.config.settings import Settings
 from app.domains.user.user_repository import UserRepository
 
 
-def token_required(f):
+def async_token_required(f):
     @wraps(f)
-    def decorated(*args, **kwargs):
+    async def decorated(*args, **kwargs):
         token = request.headers.get('Authorization')
         if not token:
             return jsonify({
                 'message': 'token is missing',
             }), HTTPStatus.UNAUTHORIZED
+
         try:
             data = jwt.decode(
                 token, Settings().SECRET_KEY, algorithms=[Settings().ALGORITHM]
@@ -26,11 +27,25 @@ def token_required(f):
             current_user = user_repository.find_by_email_or_username(
                 username=data['username']
             )
+            if not current_user:
+                return jsonify({
+                    'message': 'User not found',
+                }), HTTPStatus.UNAUTHORIZED
+        except jwt.ExpiredSignatureError:
+            return jsonify({
+                'message': 'Token has expired',
+            }), HTTPStatus.UNAUTHORIZED
+        except jwt.InvalidTokenError:
+            return jsonify({
+                'message': 'Invalid token',
+            }), HTTPStatus.UNAUTHORIZED
         except Exception:
             return jsonify({
-                'message': 'token is invalid or expired',
+                'message': 'Token is invalid or expired',
             }), HTTPStatus.UNAUTHORIZED
-        return f(current_user, *args, **kwargs)
+
+        # Aguarda a execução da função decorada
+        return await f(current_user, *args, **kwargs)
 
     return decorated
 
