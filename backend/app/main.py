@@ -1,4 +1,5 @@
 from flask import Flask, g
+from flask_cors import CORS
 from sqlalchemy import Engine, select
 from sqlalchemy.orm import Session
 
@@ -7,6 +8,7 @@ from app.config.db import engine
 
 def create_app(engine: Engine):
     app = Flask(__name__)
+    CORS(app)
 
     app.config['FLASK_PYDANTIC_VALIDATION_ERROR_STATUS_CODE'] = 422
 
@@ -38,4 +40,4 @@ def create_app(engine: Engine):
 
 if __name__ == '__main__':
     app = create_app(engine)
-    app.run(host="0.0.0.0", port=8000)
+    app.run(host='0.0.0.0', port=8000)
